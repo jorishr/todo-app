@@ -7,7 +7,7 @@ const   {src, dest, series, parallel, watch}     = require('gulp'),
         browserSync     = require('browser-sync');
     
 
-const   baseDir      = './app'
+const   baseDir      = './app',
         htmlSrcGlob  = baseDir + '/views/**/*.html', 
         cssSrcGlob   = baseDir + '/public/**/*.css',
         cssDistGlob  = './dist/app/public',
@@ -62,7 +62,7 @@ function startBrowserSync (){
       // proxy the expressjs app and use a different port 
       proxy: 'http://localhost:3000',
       port: 4000,
-      files: [cssSrcGlob, jsSrcGlob, htmlSrcGlob],   //  watch main files for changes
+      files: [cssSrcGlob, jsSrcGlob, htmlSrcGlob]   //  watch main files for changes
     });
 };
 
