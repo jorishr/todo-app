@@ -4,7 +4,7 @@
 - controller: Nodejs (Express)
 - model: MongoDb & Mongoose
 - AJAX with jQUERY
-- taskrunner: gulp (+nodemon+browserSync)
+- taskrunner: gulp (nodemon+browserSync; minification, autoprefixer, babel)
 # api app functionality
 - get all tasks from db (GET)
 - add new task (POST)
