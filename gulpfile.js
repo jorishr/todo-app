@@ -2,19 +2,34 @@ const   {src, dest, series, parallel, watch}     = require('gulp'),
         autoprefixer    = require('autoprefixer'),
         postcss         = require('gulp-postcss'),
         cssnano         = require('cssnano'),
-        uglify          = require('uglify-js'),
+        uglify          = require('gulp-uglify'),
         nodemon         = require('nodemon'),
+        gulpMinHtml     = require('gulp-minify-html'),
+        babel           = require('gulp-babel'),
+        del             = require('del'),
         browserSync     = require('browser-sync');
-    
 
 const   baseDir      = './app',
+        distDir      = './dist',
         htmlSrcGlob  = baseDir + '/views/**/*.html', 
+        htmlDistGlob = distDir + '/views',
         cssSrcGlob   = baseDir + '/public/**/*.css',
-        cssDistGlob  = './dist/app/public',
+        cssDistGlob  = distDir + '/public',
         jsSrcGlob    = baseDir + '/public/**/*.js',
-        jsDistGlob   = './dist/app/public';
+        jsDistGlob   = distDir + '/public';
 
 // build tasks
+
+async function startClean(){
+    const deletedPaths = await del('./dist');
+    console.log('Deleted files and directories:\n', deletedPaths.join('\n'));
+};
+
+function copyEnv(){
+    return src('./*.env')
+    .pipe(dest(distDir));
+};
+
 function cssStyles(){
     return src(cssSrcGlob)
     .pipe(postcss([autoprefixer, cssnano]))
@@ -23,8 +38,22 @@ function cssStyles(){
 
 function jsCompile(){
     return src(jsSrcGlob)
+    .pipe(babel({presets: ['@babel/env']}))
     .pipe(uglify())
     .pipe(dest(jsDistGlob));
+};
+
+function buildApp(){
+    return src(['./app/index.js', './app/helpers/*.js', './app/models/*.js', './app/routes/*.js'], {base: './app/'})
+    .pipe(babel({presets: ['@babel/env']}))
+    .pipe(uglify())
+    .pipe(dest(distDir));
+};
+
+function minifyHtml(){
+    return src (htmlSrcGlob)
+    .pipe(gulpMinHtml())
+    .pipe(dest(htmlDistGlob));
 };
 
 /*  
@@ -67,4 +96,4 @@ function startBrowserSync (){
 };
 
 exports.watch = series(startNodemon, startBrowserSync);
-exports.build = series(cssStyles, jsCompile);
+exports.build = series(startClean, parallel(copyEnv, cssStyles, jsCompile, minifyHtml, buildApp));
