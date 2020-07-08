@@ -65,7 +65,7 @@ function minifyHtml(){
  function startNodemon(cb) {
     let called = false;
     return nodemon({
-        script: baseDir + '/index.js',
+        script: baseDir + '/bin/www.js',
         watch:  baseDir + '/**/*.js',
         ignore: baseDir + '/public'
     })

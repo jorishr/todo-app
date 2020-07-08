@@ -29,9 +29,11 @@ function addTodos(todos){
     });
 };
 
-/*  to ways to add the ID to the <li> that are generated on the page for reference on put/delete requests:
-    - add a data attribute to <li data-id="todo._id">
-    - or jquery: elem.data('<name>', <value>), which is stored in memory
+/*  
+Two ways to add the ID to the <li> that are generated on the page for reference
+on put/delete requests:
+- add a data attribute to <li data-id="todo._id">
+- or jquery: elem.data('<name>', <value>), which is stored in memory
 */
 function addTodo(todo){
     let newLi = $(`<li class="task">${todo.name}<span>X</span></li>`);
@@ -69,7 +71,6 @@ function updateTodo(currentElem){
     })
     .catch(function(err){console.log(err)});
 };
-
 
 function removeTodo(currentElem){
     let currentLiId = currentElem.data('id');

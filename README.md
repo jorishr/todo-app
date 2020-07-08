@@ -1,13 +1,12 @@
-# Complete Todo App
-- Single Page todo-app with custom JSON API
-# setup
-- controller: Nodejs (Express)
-- model: MongoDb & Mongoose
-- AJAX with jQUERY
-- taskrunner: gulp (nodemon+browserSync; minification, autoprefixer, babel)
-# api app functionality
-- get all tasks from db (GET)
-- add new task (POST)
-- retrieve a single task (GET)
-- update a todo (PUT)
-- delete a todo (DELETE)
+# Task Manager
+Single page todo-app with custom JSON API.
+
+## API endpoints
+- '/api/todos' GET: get all tasks from database
+- '/api/todos' POST: add new task to database
+- '/api/todos/:id' GET: retrieve a single task 
+- '/api/todos/:id' PUT: update an existing task
+- '/api/todos/:id' DELETE: delete an existing task
+
+## UI code with jQuery
+See app/public/app.js

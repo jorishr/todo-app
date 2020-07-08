@@ -1,7 +1,7 @@
-const db = require('../models');
+const Todo = require('../models/index');
 
 exports.getTodos = (req, res) => {
-    db.Todo.find()
+    Todo.find()
     .then(function(todos){
         res.json(todos);
     })
@@ -9,7 +9,7 @@ exports.getTodos = (req, res) => {
 };
 
 exports.createTodos = (req, res) => {
-    db.Todo.create(req.body)
+    Todo.create(req.body)
     .then(function(newTodo){
       res.status(201).json(newTodo);  
     })
@@ -17,7 +17,7 @@ exports.createTodos = (req, res) => {
 };
 
 exports.showTodo = (req, res) => {
-    db.Todo.findById(req.params.todoId)
+    Todo.findById(req.params.todoId)
     .then(function(foundTodo){
       res.json(foundTodo);  
     })
@@ -26,7 +26,7 @@ exports.showTodo = (req, res) => {
 
 //without the option {new: true} the method findOneAndUpdate return the old value
 exports.updateTodo = (req, res) => {
-    db.Todo.findOneAndUpdate({_id: req.params.todoId}, req.body, {new: true})
+    Todo.findOneAndUpdate({_id: req.params.todoId}, req.body, {new: true})
     .then(function(updatedTodo){
         res.json(updatedTodo);
     })
@@ -34,7 +34,7 @@ exports.updateTodo = (req, res) => {
 };
 
 exports.delTodo = (req, res) => {
-    db.Todo.remove({_id: req.params.todoId})
+    Todo.remove({_id: req.params.todoId})
     .then(function(){
         res.json({message: 'Task deleted from the database!'});
     })
