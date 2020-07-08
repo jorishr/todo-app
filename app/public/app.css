@@ -75,6 +75,13 @@ header h2 {
 	color: #bdc3c7;
 }
 
+li {
+	display: flex;
+	justify-content: space-between;
+	flex-direction: row;
+	align-items: center;
+}
+
 li span {
   float: right;
   color: #c0392b;
@@ -85,3 +92,28 @@ li span {
 li span:hover {
   color: #e74c3c
 }
+
+input[type="checkbox"] {
+	margin-right: 2em;
+}
+
+button {
+	opacity: 0;
+	float: right;
+	margin-right: 15em;
+	padding: 1em 2em;
+	border: none;
+	background-color: #c0392b;
+	color: white;
+	border: none;
+	border-radius: 1em;
+}
+
+button.show {
+	opacity: 1;
+}
+
+button:hover {
+	cursor: pointer;
+}
+

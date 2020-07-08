@@ -1,4 +1,5 @@
 $(document).ready(function(){
+
     $.getJSON('/api/todos')
     .then(addTodos)
     .catch(function(err){console.log(err)});
@@ -10,17 +11,54 @@ $(document).ready(function(){
     });
 
     //<li> elems are not loaded at start, thus listener on ul
-    $('.list').on('click', 'li', function(e){
-        let currentLi = $(this);
+    $('.list').on('click', 'p', function(e){
+        let currentLi = $(this).parent();
         updateTodo(currentLi)
     });
 
     //<span> elems are not loaded at start, thus listener on ul
     $('.list').on('click', 'span', function(e){
         e.stopPropagation();
-        let currentLi = $(this).parent();
+        let currentLi = $(this).parent().parent();
         removeTodo(currentLi)
     });
+
+    setTimeout(() => {
+
+        let lastChecked = null;
+        let chkboxes = $('input:checkbox');
+        console.log(chkboxes)
+        
+        chkboxes.click(function(e) {
+            //console.log("checkbox clicked");
+            if(!lastChecked) {
+                //console.log("This was the first checkbox clicked");
+                lastChecked = this;
+                return;
+            }
+            if(e.shiftKey) {
+                //console.log("Shift held");
+                let start = chkboxes.index(this);
+                let end   = chkboxes.index(lastChecked);
+                chkboxes.slice(Math.min(start, end), Math.max(start, end) + 1)
+                    .prop('checked', lastChecked.checked);
+            }
+            lastChecked = this;
+        });
+    /*     
+        $("#checkAll").click(function () {
+            if ($("#checkAll").is(':checked')) {
+                $("input[type=checkbox]").each(function () {
+                    $(this).prop("checked", true);
+                });
+    
+            } else {
+                $("input[type=checkbox]").each(function () {
+                    $(this).prop("checked", false);
+                });
+            }
+        }); */
+    }, 1000)
 });
 
 function addTodos(todos){
@@ -36,7 +74,7 @@ on put/delete requests:
 - or jquery: elem.data('<name>', <value>), which is stored in memory
 */
 function addTodo(todo){
-    let newLi = $(`<li class="task">${todo.name}<span>X</span></li>`);
+    let newLi = $(`<li class="task"><p>${todo.name}<div></p><input type="checkbox"><span>X</span></div></li>`);
     newLi.data('id', todo._id);
     newLi.data('completed', todo.completed);
     if(todo.completed){
@@ -65,7 +103,8 @@ function updateTodo(currentElem){
     })
     .then(function(updatedTodo){
         //update styles
-        currentElem.toggleClass('done');
+        const p = currentElem[0].childNodes[0]
+        p.classList.toggle('done')
         //update the hidden data attribute
         currentElem.data('completed', !isDone);
     })
