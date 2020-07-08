@@ -17,6 +17,8 @@ const   baseDir      = './app',
         cssDistGlob  = distDir + '/public',
         jsSrcGlob    = baseDir + '/public/**/*.js',
         jsDistGlob   = distDir + '/public';
+        binSrcGlob   = baseDir + '/bin/*.js';
+        binDistGlob  = distDir + '/bin';
 
 // build tasks
 
@@ -44,7 +46,7 @@ function jsCompile(){
 };
 
 function buildApp(){
-    return src(['./app/index.js', './app/helpers/*.js', './app/models/*.js', './app/routes/*.js'], {base: './app/'})
+    return src(['./app/**/*.js'], {base: './app/'})
     .pipe(babel({presets: ['@babel/env']}))
     .pipe(uglify())
     .pipe(dest(distDir));
@@ -96,4 +98,4 @@ function startBrowserSync (){
 };
 
 exports.watch = series(startNodemon, startBrowserSync);
-exports.build = series(startClean, parallel(copyEnv, cssStyles, jsCompile, minifyHtml, buildApp));
+exports.build = series(startClean, parallel(copyEnv, cssStyles, /*jsCompile,*/ minifyHtml, buildApp));
