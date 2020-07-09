@@ -95,15 +95,34 @@ li span:hover {
 
 input[type="checkbox"] {
 	margin-right: 2em;
+	width: 20px;
+	height: 20px;
+}
+
+.actions {
+	width: 800px;
+	margin: 0 auto;
+	padding-left: 55px;
+	padding-bottom: 1em;
+	display: flex;
+	flex-direction: row;
+	justify-content: flex-end;
+}
+
+hr {
+	color: rgba(0, 0, 0, .1);
+	height: 1px;
+	width: 500px;
+	margin: 0 185px 0 auto;
 }
 
 button {
 	opacity: 0;
-	float: right;
-	margin-right: 15em;
 	padding: 1em 2em;
+	margin-right: 2em;
 	border: none;
-	background-color: #c0392b;
+	background-color: #2c3e50;
+	letter-spacing: 1px;
 	color: white;
 	border: none;
 	border-radius: 1em;
