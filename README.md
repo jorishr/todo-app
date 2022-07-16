@@ -1,6 +1,16 @@
 # Task Manager
 Single page todo-app with custom JSON API.
 
+Main UI feature: select multiple (shift key), delete and update a custom selection of tasks.
+
+Built with NodeJs, Express & MongoDb.
+
+API endpoints for GET/POST/PUT/DELETE requests.
+
+AJAX requests with jQuery.
+
+Development tools: Gulp taskrunner with Nodemon.
+
 ## API endpoints
 - '/api/todos' GET: get all tasks from database
 - '/api/todos' POST: add new task to database
